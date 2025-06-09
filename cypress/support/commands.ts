@@ -52,6 +52,8 @@ Cypress.Commands.add("login", (username, password, { rememberUser = false } = {}
   cy.intercept("POST", "/login").as("loginUser");
   cy.intercept("GET", "checkAuth").as("getUserProfile");
 
+  // This code checks the current URL path, and if it’s not the sign-in page, it navigates there.
+  // It ensures the login command always starts from the correct page for reliable test execution.
   cy.location("pathname", { log: false }).then((currentPath) => {
     if (currentPath !== signinPath) {
       cy.visit(signinPath);
